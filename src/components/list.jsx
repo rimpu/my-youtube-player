@@ -3,39 +3,58 @@ import ListItem from "./list-item";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as playerActions from "../redux/actions/player.actions";
 
 toast.configure({
-  autoClose: 2000,
+  autoClose: 3000,
   draggable: false
 });
 
 class List extends React.Component {
-  notify = () =>
-    toast("Video Added", {
-      position: toast.POSITION.BOTTOM_RIGHT
+  notify = msg =>
+    toast(msg, {
+      position: toast.POSITION.TOP_RIGHT,
+      type: toast.TYPE.WARNING,
+      closeButton: false
     });
-  // componentDidUpdate() {
-  //   this.notify();
-  // }
+
+  componentDidMount() {
+    const playList = localStorage.getItem("playlist");
+    if (playList) {
+      this.props.addPlayList(JSON.parse(playList));
+    }
+  }
+
+  componentDidUpdate() {
+    const { error } = this.props;
+    error && this.notify(error);
+  }
   render() {
     const { playlist } = this.props;
+
     return (
       <div className="list">
-        {playlist &&
-          playlist.map((song, index) => (
-            <ListItem
-              index={index}
-              title={Object.values(song)[0]}
-              key={index}
-            />
-          ))}
+        {playlist.length > 0
+          ? playlist.map((song, index) => (
+              <ListItem
+                index={index}
+                title={Object.values(song)[0]}
+                key={index}
+              />
+            ))
+          : "NO VIDEO TO PLAY"}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  playlist: state.playlist
+  playlist: state.playlist,
+  error: state.error
 });
 
-export default connect(mapStateToProps)(List);
+const mapDispatchToProps = dispatch => ({
+  addPlayList: playList => dispatch(playerActions.addPlayListToStore(playList))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

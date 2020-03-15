@@ -1,0 +1,19 @@
+.main-container {
+  display: grid;
+}
+.player-grid {
+  grid-column: 1;
+}
+.panel-grid {
+  grid-column: 2;
+}
+.list {
+  height: 245px;
+  width: 100%;
+  overflow: scroll;
+}
+
+iframe {
+  width: 100%;
+  min-width: 500px;
+}

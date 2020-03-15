@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Button from "./button";
 import List from "./list";
 import { validateVideo } from "../redux/actions/player.actions";
+import "../styles/playlist.css";
 
 class SidePanel extends React.Component {
   constructor() {
@@ -19,7 +20,7 @@ class SidePanel extends React.Component {
   handleAdd = e => {
     e.preventDefault();
     this.props.validateVideo(this.state.url);
-    this.setState({ url: "" }, () => console.log("Input erased"));
+    this.setState({ url: "" });
   };
 
   //Input
