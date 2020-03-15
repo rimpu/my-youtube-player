@@ -14,10 +14,12 @@ export const addVideo = (song_id, title) => {
 export const validateVideo = url => {
   return dispatch => {
     dispatch(invalidVideo("")); //Empty
+    // eslint-disable-next-line no-useless-escape
     const checkRegex = /https?:\/\/www[.]youtube[.]com\/watch[?]v=([_!@#$()\-`\^+a-zA-Z0-9]+)&?([[_!@#$()\-`\^+a-zA-Z0-9]+)?/;
     let isUrlValid = checkRegex.test(url);
     let id = "";
     if (isUrlValid) {
+      // eslint-disable-next-line no-useless-escape
       const regex = /www[.]youtube[.]com\/watch[?]v=([_!@#$&()\-`\^+a-zA-Z0-9]+)&?([[_!@#$()\-`\^+a-zA-Z0-9]+)?/;
       id = regex.exec(url);
       //Use your own YouTube Data API key
