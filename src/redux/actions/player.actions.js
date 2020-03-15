@@ -1,5 +1,4 @@
 import actionTypes from "../constants/actions.types";
-import API_KEY from "../../config/config";
 
 export const addPlayListToStore = playlist => {
   return {
@@ -22,8 +21,10 @@ export const validateVideo = url => {
       const regex = /www[.]youtube[.]com\/watch[?]v=([_!@#$&()\-`\^+a-zA-Z0-9]+)&?([[_!@#$()\-`\^+a-zA-Z0-9]+)?/;
       id = regex.exec(url);
       //Use your own YouTube Data API key
+      console.log(process.env, process);
+
       fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${id[1]}&key=${API_KEY.API_KEY}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics`
+        `https://www.googleapis.com/youtube/v3/videos?id=${id[1]}&key=${process.env.REACT_APP_API_KEY}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics`
       )
         .then(res => res.json())
         .then(data => {
